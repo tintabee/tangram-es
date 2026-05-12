@@ -1,0 +1,60 @@
+name: "Android SDK Release"
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build-publish-android:
+    name: "Build and Publish Android SDK to GitHub Packages"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      CCACHE_MAXSIZE: 400M
+      GRADLE_OPTS: -Xmx2048m
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: "Set up Java 21"
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: "Install NDK"
+        run: echo "y" | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "ndk;25.2.9519653"
+
+      - name: "Install ccache"
+        run: sudo apt-get install -y ccache
+
+      - name: "Cache ccache"
+        uses: actions/cache@v4
+        with:
+          path: ~/.ccache
+          key: android-release-ccache-v1-${{ github.sha }}
+          restore-keys: android-release-ccache-v1-
+
+      - name: "Reset ccache stats"
+        run: ccache --zero-stats
+
+      - name: "Build and Publish to GitHub Packages"
+        run: cd platforms/android && ./gradlew :tangram:publishMavenPublicationToGitHubPackagesRepository
+          -Ptangram.ccache=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+
+      - name: "Print ccache stats"
+        run: ccache --show-stats
+
+      - name: "Upload AAR artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: tangram-android-${{ github.sha }}
+          path: platforms/android/tangram/build/outputs/aar/tangram-release.aar
+          retention-days: 60

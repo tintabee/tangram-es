@@ -6,16 +6,16 @@ on:
 jobs:
   build-test-windows:
     name: "Build and Test on Windows"
-    runs-on: windows-2019
+    runs-on: windows-2022
     env:
       VCPKG_BINARY_SOURCES: 'clear;nuget,GitHub,readwrite'
     steps:
       - name: "Checkout Repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: "Checkout vcpkg"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: microsoft/vcpkg
           ref: 2023.12.12
@@ -28,7 +28,7 @@ jobs:
           -password ${{ secrets.GITHUB_TOKEN }}
           -storepasswordincleartext 
       - name: "Configure CMake"
-        run: cmake -S . -B .\build -G "Visual Studio 16 2019"
+        run: cmake -S . -B .\build -G "Visual Studio 17 2022"
           -DCMAKE_TOOLCHAIN_FILE=".\vcpkg\scripts\buildsystems\vcpkg.cmake"
           -DCMAKE_BUILD_TYPE=Debug
           -DTANGRAM_BUILD_TESTS=1
@@ -42,13 +42,13 @@ jobs:
     runs-on: macos-12
     steps:
       - name: "Checkout Repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: "Install dependencies"
         run: brew install ninja ccache
       - name: "Cache ccache directory"
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/Library/Caches/ccache
           key: macos-ccache-v1-${{ github.sha }}
@@ -69,7 +69,7 @@ jobs:
         run: ./tests/tests.out
         working-directory: ./build
       - name: "Upload demo app"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: macos-app
           path: build/*.app
@@ -79,13 +79,13 @@ jobs:
     runs-on: macos-12
     steps:
       - name: "Checkout Repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: "Install dependencies"
         run: brew install ccache
       - name: "Cache ccache directory"
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/Library/Caches/ccache
           key: ios-ccache-v1-${{ github.sha }}
