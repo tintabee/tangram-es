@@ -1,10 +1,10 @@
 apply plugin: 'com.android.library'
 
 group = 'com.mapzen.tangram'
-version = '0.17.2-SNAPSHOT'
+version = '0.17.3-SNAPSHOT'
 
 android {
-  compileSdk 30
+  compileSdk 36
   ndkVersion "25.2.9519653"
 
   // Specific ABI targets can be chosen with the 'abis' property as a comma-separated list of ABIs.
@@ -16,7 +16,7 @@ android {
   }
 
   defaultConfig {
-    minSdkVersion 16
+    minSdkVersion 26
     targetSdkVersion 30
     consumerProguardFiles 'tangram-proguard-rules.txt'
     buildConfigField 'String', 'TAG', '"Tangram"'
@@ -74,6 +74,17 @@ android {
       externalNativeBuild {
         cmake.cppFlags'-g0'
       }
+    }
+  }
+
+  buildFeatures {
+    buildConfig = true
+  }
+
+  publishing {
+    singleVariant('release') {
+      withSourcesJar()
+      withJavadocJar()
     }
   }
 

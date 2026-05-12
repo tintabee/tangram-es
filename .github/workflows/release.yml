@@ -2,14 +2,14 @@ name: "Release"
 on:
   push:
     branches:
-      - main
+      - development
 jobs:
   build-deploy-ios:
     name: "Build and Deploy iOS Release"
-    runs-on: macos-10.15
+    runs-on: macos-14
     steps:
       - name: "Checkout Repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
       - name: "Set version variable"
@@ -21,7 +21,7 @@ jobs:
       - name: "Install ccache"
         run: brew install ccache
       - name: "Cache ccache directory"
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/Library/Caches/ccache
           key: ios-release-ccache-v1-${{ github.sha }}
@@ -41,14 +41,14 @@ jobs:
           cp platforms/ios/framework/README.md build/pod/README.md
           cp LICENSE build/pod/LICENSE
       - name: "Upload pod"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: tangram-ios-${{ env.TANGRAM_VERSION }}
           path: build/pod/
       - name: "Build docs"
         run: make ios-docs
       - name: "Upload docs"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: tangram-ios-docs-${{ env.TANGRAM_VERSION }}
           path: build/ios-docs/
