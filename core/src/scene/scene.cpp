@@ -320,7 +320,6 @@ void Scene::prefetchTiles(const View& _view) {
             style->setPixelScale(m_pixelScale);
         }
         m_fontContext->setPixelScale(m_pixelScale);
-
         m_tileWorker->startJobs();
     }
     LOGTO("<<< loadTiles");

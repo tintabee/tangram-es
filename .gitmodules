@@ -18,7 +18,7 @@
 	url = https://github.com/tangrams/duktape.git
 [submodule "external/yaml-cpp"]
 	path = core/deps/yaml-cpp
-	url = https://github.com/tangrams/yaml-cpp
+	url = ../yaml-cpp
 [submodule "external/glfw"]
 	path = platforms/common/glfw
 	url = https://github.com/glfw/glfw
@@ -30,7 +30,7 @@
 	url = https://github.com/hjanetzek/alfons
 [submodule "external/harfbuzz-icu-freetype"]
 	path = core/deps/harfbuzz-icu-freetype
-	url = https://github.com/tangrams/harfbuzz-icu-freetype.git
+	url = ../harfbuzz-icu-freetype.git
 [submodule "external/SQLiteCpp"]
 	path = core/deps/SQLiteCpp
 	url = https://github.com/SRombauts/SQLiteCpp.git

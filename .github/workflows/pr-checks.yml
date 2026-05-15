@@ -1,5 +1,8 @@
 name: "PR Checks"
-on: push
+on:
+  push:
+    branches:
+      - development
 jobs:
   build-test-windows:
     name: "Build and Test on Windows"
