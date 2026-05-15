@@ -28,9 +28,9 @@
 [submodule "external/alfons"]
 	path = core/deps/alfons
 	url = https://github.com/hjanetzek/alfons
-[submodule "external/harfbuzz-icu-freetype"]
-	path = core/deps/harfbuzz-icu-freetype
-	url = ../harfbuzz-icu-freetype.git
 [submodule "external/SQLiteCpp"]
 	path = core/deps/SQLiteCpp
 	url = https://github.com/SRombauts/SQLiteCpp.git
+[submodule "external/harfbuzz-icu-freetype"]
+	path = core/deps/harfbuzz-icu-freetype
+	url = ../harfbuzz-icu-freetype.git
