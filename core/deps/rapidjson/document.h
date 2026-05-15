@@ -322,7 +322,7 @@ struct GenericStringRef {
     operator const Ch *() const { return s; }
 
     const Ch* const s; //!< plain CharType pointer
-    unsigned int length //!< length of the string (excluding the trailing NULL terminator)
+    unsigned int length; //!< length of the string (excluding the trailing NULL terminator)
 
 private:
     //! Disallow construction from non-const array
