@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 group = 'com.mapzen.tangram'
-version = '0.17.3-SNAPSHOT'
+version = '0.17.4-SNAPSHOT'
 
 android {
   compileSdk 36
-  ndkVersion "25.2.9519653"
+  ndkVersion "28.2.13676358"
 
   // Specific ABI targets can be chosen with the 'abis' property as a comma-separated list of ABIs.
   // From the command line, add '-Ptangram.abis=armeabi-v7a,x86,...' to only build those ABIs.
@@ -17,17 +17,17 @@ android {
 
   defaultConfig {
     minSdkVersion 26
-    targetSdkVersion 30
+    targetSdkVersion 36
     consumerProguardFiles 'tangram-proguard-rules.txt'
     buildConfigField 'String', 'TAG', '"Tangram"'
     externalNativeBuild {
       cmake {
         targets 'tangram'
         arguments '-DTANGRAM_PLATFORM=android',
-                  '-DANDROID_STL=c++_shared',
-                  '-DANDROID_STL=c++_static', // use statically linked STL to avoid incompatibilities with older versions of libc++_shared.so
-                  '-DCMAKE_CXX_STANDARD=14'
-                  '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
+                  '-DANDROID_STL=c++_shared'
+                  //'-DANDROID_STL=c++_static', // use statically linked STL to avoid incompatibilities with older versions of libc++_shared.so
+                  //'-DCMAKE_CXX_STANDARD=14'
+                  //'-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
 
         cppFlags '-std=c++14',
                  '-fvisibility=hidden', // export only JNIEXPORT
@@ -78,7 +78,7 @@ android {
       externalNativeBuild {
         cmake.cppFlags '-g0'
       }
-      minifyEnabled = true
+      minifyEnabled = false
     }
   }
 
